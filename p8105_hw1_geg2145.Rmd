@@ -1,0 +1,13 @@
+---
+title: "p8105_hw1_geg2145"
+author: "Gustavo Garcia-Franceschini"
+date: "`r Sys.Date()`"
+output: github_document
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+```
+
+# Problem 1
+
