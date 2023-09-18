@@ -14,8 +14,7 @@ library(moderndive)
 
 ```{r loading_data}
 data("early_january_weather")
-
-
+weather = early_january_weather
 ```
 
-
+This dataset has hourly meterological data for the month of January 2013 for three airports: La Guardia, John F. Kennedy, and Newark Liberty. In total, this dataset has `r nrow(weather)` rows and `r ncol(weather)` columns. The `origin` variable tells us the weather station that made the recording, although for this subset, all recordings are made from "EWR" (Newark). We also have the recorded `temperature` and `relative humidity`, along with the `time` the recording was made (date and hour). The mean temperature across all the recordings available is `r round(mean(pull(weather,temp)), 3)` degrees Fahrenheit.
