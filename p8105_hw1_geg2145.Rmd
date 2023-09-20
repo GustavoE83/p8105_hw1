@@ -67,7 +67,7 @@ For the `positive` variable, we have a logical vector and the `mean` function tr
 
 For the character and factor variables, the `mean` function does not work (since they aren't numbers), so we get `NA`.
 
-```{r warning=FALSE, p2_changing_to_numerical include=FALSE}
+```{r p2_changing_to_numerical, warning=FALSE,  include=FALSE}
 p2_df = p2_df %>%
   mutate(
     positive = as.numeric(positive),
