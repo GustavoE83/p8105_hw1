@@ -19,7 +19,7 @@ weather = early_january_weather
 
 This dataset has hourly meterological data for the month of January 2013 for three airports: La Guardia, John F. Kennedy, and Newark Liberty. In total, this dataset has `r nrow(weather)` rows and `r ncol(weather)` columns. The `origin` variable tells us the weather station that made the recording, although for this subset, all recordings are made from "EWR" (Newark). We also have the recorded `temperature` and `relative humidity`, along with the `time` the recording was made (date and hour). The mean temperature across all the recordings available is `r round(mean(pull(weather,temp)), 3)` degrees Fahrenheit.
 
-```{r}
+```{r p1_plot}
 ggplot(weather) + 
   geom_point(aes(x= time_hour, y = temp, col= humid)) + 
   labs(x="Time", y="Temperature (in F)", 
@@ -30,4 +30,66 @@ ggsave("problem1_plot.png")
 ```
 
 In the above scatterplot, we see `time` in the x-axis and `temperature` in the y axis. Although the temperature fluctuates throughout the day (as we go from day to night, and back to day), we see that overall, temperature is trending upwards as time goes on. We also see our points colored by their `relative humidity`, and see most dark points in earlier dates, with most of the lighter ones in later dates. This indicates that generally, the days got more humid as January went along.
+
+# Problem 2
+
+```{r p2_df}
+p2_df = tibble(
+  
+  normal = rnorm(10),
+  positive = normal > 0,
+  characters = sample(c("a", "b", "c"), 10, replace = T),
+  factors = factor(characters)
+  
+)
+```
+
+```{r p2_means}
+p2_df %>%
+  pull(normal) %>%
+  mean()
+
+p2_df %>%
+  pull(positive) %>%
+  mean()
+
+p2_df %>%
+  pull(characters) %>%
+  mean()
+
+p2_df %>%
+  pull(factors) %>%
+  mean()
+```
+We are able to get the mean of the 10 numbers from a standard Normal distribution (`r mean(pull(p2_df, normal))`), which works as we expect it to. 
+
+For the `positive` variable, we have a logical vector and the `mean` function treats `True` as 1 and `False` as 0. Using this, we get the mean.
+
+For the character and factor variables, the `mean` function does not work (since they aren't numbers), so we get `NA`.
+
+```{r warning=FALSE, p2_changing_to_numerical include=FALSE}
+p2_df = p2_df %>%
+  mutate(
+    positive = as.numeric(positive),
+    characters = as.numeric(characters),
+    factors = as.numeric(factors)
+  )
+```
+
+```{r p2_means2}
+p2_df %>%
+  pull(positive) %>%
+  mean()
+
+p2_df %>%
+  pull(characters) %>%
+  mean()
+
+p2_df %>%
+  pull(factors) %>%
+  mean()
+```
+
+When converting the vectors to numerical, `logical` values switch to 0's and 1's (as described before), `character` values change to NA's, and `factor` values switch to a number representing their level, with lowest value assigned to the first level in alphabetical order ("a" was mapped to 1, "b" was mapped to 2 and "c" was mapped to 3). Interestingly, taking the mean of the "factor" vector works now even though it wasn't working before.
+
 
